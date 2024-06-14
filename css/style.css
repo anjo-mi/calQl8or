@@ -1,0 +1,71 @@
+/* Box Model Hack */
+* {
+     box-sizing: border-box;
+}
+
+/* Clear fix hack */
+.clearfix:after {
+     content: ".";
+     display: block;
+     clear: both;
+     visibility: hidden;
+     line-height: 0;
+     height: 0;
+}
+
+.clear {
+	clear: both;
+}
+
+/******************************************
+/* BASE STYLES
+/*******************************************/
+
+html {
+     font-size: 62.5%;
+}
+
+h1{
+     margin: 0 auto;
+}
+*{
+     outline: .1rem solid black;
+}
+
+.calculator{
+     display: grid;
+     grid-template-columns: 5;
+     grid-template-rows: 7;
+     height: 80rem;
+     width: 50rem;
+}
+
+.equation{
+     grid-column-start: 1;
+     grid-column-end: 6;
+     grid-row-start: 1;
+     grid-row-end: 2;
+}
+.answer{
+     grid-column-start: 1;
+     grid-column-end: 6;
+     grid-row-start: 2;
+     grid-row-end: 3;
+}
+
+.equals{
+     grid-column-start: 5;
+     grid-column-end: 6;
+     grid-row-start: 6;
+     grid-row-end: 8;
+}
+
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+
+
+/******************************************
+/* ADDITIONAL STYLES
+/*******************************************/
