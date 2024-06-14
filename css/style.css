@@ -26,7 +26,7 @@ html {
 }
 
 h1{
-     margin: 0 auto;
+     text-align: center;
 }
 *{
      outline: .1rem solid black;
@@ -38,6 +38,7 @@ h1{
      grid-template-rows: 7;
      height: 80rem;
      width: 50rem;
+     margin: 0 auto;
 }
 
 .equation{
@@ -53,11 +54,8 @@ h1{
      grid-row-end: 3;
 }
 
-.equals{
-     grid-column-start: 5;
-     grid-column-end: 6;
-     grid-row-start: 6;
-     grid-row-end: 8;
+button{
+     font-size: 2.5rem;
 }
 
 
