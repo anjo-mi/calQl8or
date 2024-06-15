@@ -19,6 +19,9 @@ function operation(event){
             }else if (!isNaN(el)){
                 el = el
             }
+            let placeHolder = value.toString()
+            display = placeHolder.replace('()', '')
+            document.querySelector('.answer').innerText = parseInt(display, 10)
         })
     }
     document.querySelector('.equation').innerText = display
