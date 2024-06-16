@@ -84,8 +84,8 @@ function operation(event){
         equation.pop()
         display = equation.join('')
     }else if(event.target.classList.contains('equals')){
-        
-        display = equation.join('')
+        display = equation.toString()
+        let answer = display.replaceAll('()', '').replace(pi, '(3.1415926535897932)').replace(divide, '/')
     }
     document.querySelector('.equation').innerText = display
 }
