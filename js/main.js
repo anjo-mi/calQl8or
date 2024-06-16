@@ -4,6 +4,12 @@ let equation = []
 
 let display = ''
 
+let pi = '\u03C0'
+
+let root = '\u221A'
+
+let divide = '\u00f7'
+
 function operation(event){
     if (event.target.classList.contains('clear')){
         equation = []
@@ -18,7 +24,7 @@ function operation(event){
         equation.push('%')
         display = equation.join('')
     }else if(event.target.classList.contains('root')){
-        equation.push('&radic;')
+        equation.push(root)
         display = equation.join('')
     }else if(event.target.classList.contains('one')){
         equation.push('1')
@@ -30,7 +36,7 @@ function operation(event){
         equation.push('3')
         display = equation.join('')
     }else if(event.target.classList.contains('divide')){
-        equation.push('&div;')
+        equation.push(divide)
         display = equation.join('')
     }else if(event.target.classList.contains('power')){
         equation.push('^')
@@ -63,7 +69,7 @@ function operation(event){
         equation.push('-')
         display = equation.join('')
     }else if(event.target.classList.contains('pi')){
-        equation.push('&pi;')
+        equation.push(pi)
         display = equation.join('')
     }else if(event.target.classList.contains('decimal')){
         equation.push('.')
