@@ -85,7 +85,7 @@ function operation(event){
         display = equation.join('')
     }else if(event.target.classList.contains('equals')){
         display = equation.join(' ')
-        let answer = display.replaceAll('()', '').replace(pi, '(3.1415926535897932)').replace(divide, '/').replace('x' , '*')
+        let answer = display.replaceAll('()', '').replace(pi, '(3.1415926535897932)').replace(divide, '/').replace('x' , '*').replace(root, 'Math.sqrt')
         let answerDisplay = new Function(`return ${answer} ` )
         let final = answerDisplay()
         document.querySelector('.answer').innerText = final
