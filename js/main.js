@@ -92,7 +92,7 @@ function operation(event){
             if (i === equation.length - 1){
                 return el +')'
             }
-            if (isNaN(el)){
+            if (isNaN(el) && (el !== '(') && (el !== ')') && (el !== '.')){
                 return ')' + el + '('
             }
             return el
@@ -100,7 +100,7 @@ function operation(event){
         console.log(mappedEquation)
         display = equation.join('')
         console.log(display)
-        let answer = display.replaceAll('()', '').replace(pi, '(3.1415926535897932)').replace(divide, '/').replace('x' , '*').replace(root, 'Math.sqrt')
+        let answer = display.replaceAll('()', '').replace(pi, '(3.1415926535897932)').replace(divide, '/').replace('x' , '*').replace(root, 'Math.sqrt').replace('^', '**')
         console.log(answer)
         let answerDisplay = new Function(`return ${answer} ` )
         let final = answerDisplay()
