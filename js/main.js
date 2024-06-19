@@ -84,8 +84,24 @@ function operation(event){
         equation.pop()
         display = equation.join('')
     }else if(event.target.classList.contains('equals')){
-        display = equation.join(' ')
+        console.log(equation)
+        let mappedEquation = equation.map((el,i) => {
+            if (i === 0){
+                return '(' + el
+            }
+            if (i === equation.length - 1){
+                return el +')'
+            }
+            if (isNaN(el)){
+                return ')' + el + '('
+            }
+            return el
+        })
+        console.log(mappedEquation)
+        display = equation.join('')
+        console.log(display)
         let answer = display.replaceAll('()', '').replace(pi, '(3.1415926535897932)').replace(divide, '/').replace('x' , '*').replace(root, 'Math.sqrt')
+        console.log(answer)
         let answerDisplay = new Function(`return ${answer} ` )
         let final = answerDisplay()
         document.querySelector('.answer').innerText = final
