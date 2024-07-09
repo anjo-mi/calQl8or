@@ -14,6 +14,7 @@ function operation(event){
     if (event.target.classList.contains('clear')){
         equation = []
         display = equation.toString()
+        document.querySelector('.answer').innerText = ''
     }else if(event.target.classList.contains('parOpen')){
         equation.push('(')
         display = equation.join('')
@@ -100,7 +101,7 @@ function operation(event){
         console.log(mappedEquation)
         display = equation.join('')
         console.log(display)
-        let answer = display.replaceAll('()', '').replace(pi, '(3.1415926535897932)').replace(divide, '/').replace('x' , '*').replace(root, 'Math.sqrt').replace('^', '**')
+        let answer = display.replaceAll('()', '').replaceAll(pi, '(3.1415926535897932)').replaceAll(divide, '/').replaceAll('x' , '*').replaceAll(root, 'Math.sqrt()').replaceAll('^', '**')
         console.log(answer)
         let answerDisplay = new Function(`return ${answer} ` )
         let final = answerDisplay()
