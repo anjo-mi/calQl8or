@@ -120,36 +120,40 @@ class Calculator {
         this.curr = curr
     }
     add(){
-
+        return this.prev + this.curr
     }
     subtract(){
-
+        return this.prev - this.curr
     }
     mult(){
-
+        return this.prev * this.curr
     }
     divide(){
-
+        return this.prev / this.curr
     }
     factorial(){
-
+        let num = 1
+        for (let i = this.prev ; i > 0 ; i--){
+            num *= i
+            return num
+        }
     }
     percent(){
-
+        return this.prev / 100
     }
     expo(){
-
+        return this.prev ** this.curr
     }
     root(){
-
+        return Math.sqrt(this.curr)
     }
     backspace(){
-
+        // remove last item in array
     }
     equals(){
-
+        // call appropriate methods
     }
     clear(){
-        
+        // clear both equation array and answer display
     }
 }
