@@ -111,13 +111,19 @@ let divide = '\u00f7'
 // }
 
 buttons.forEach(button => {
-    button.addEventListener('click', operation)
+    button.addEventListener('click', calc.getValue)
 })
 
 class Calculator {
-    constructor(prev, curr){
+    constructor(prev, curr, op){
         this.prev = prev
         this.curr = curr
+        this.op = op
+    }
+    getValue(){
+        if (event.target.classList.contains('one')){
+            this.prev = 1
+        }
     }
     add(){
         return this.prev + this.curr
