@@ -215,10 +215,11 @@ function getValue(event){
 }
 
 class Calculator {
-    constructor(prev, curr, op){
-        this.prev = prev
-        this.curr = curr
-        this.op = op
+    constructor(){
+        this.prev
+        this.curr
+        this.equation = []
+        this.display = ''
     }
     add(){
         return this.prev + this.curr
@@ -246,13 +247,20 @@ class Calculator {
         return this.prev ** this.curr
     }
     root(){
-        return Math.sqrt(this.curr)
+        let index = this.equation.indexOf(root)
+        if(index === -1){
+            return
+        }else if(!isNaN(this.equation[index - 1])){
+            let x = this.equation.splice(index - 1, 3)
+            x = x[0] * Math.sqrt(x[2])
+            this.equation.splice(index - 1, 0, x)
+        }
     }
     backspace(){
         // remove last item in array
     }
     equals(){
-        // call appropriate methods
+
     }
     clear(){
         // clear both equation array and answer display
