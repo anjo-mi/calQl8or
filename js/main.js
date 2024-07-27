@@ -231,7 +231,16 @@ class Calculator {
         return this.prev * this.curr
     }
     divide(){
-        return this.prev / this.curr
+        let index = this.equation.indexOf(divide)
+        if(index === -1){
+            return
+        }else if(isNaN(this.equation[index - 1])){
+            return `cannot divide ${this.equation[index-1]}`
+        }else{
+            let x = this.equation.splice(index-1, 3)
+            x = +x[0] / +x[2]
+            this.equation.splice(index-1, 0, x)
+        }
     }
     factorial(){
         let index = this.equation.indexOf('!')
