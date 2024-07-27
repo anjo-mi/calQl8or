@@ -222,10 +222,32 @@ class Calculator {
         this.display = ''
     }
     add(){
-        return this.prev + this.curr
+        let index = this.equation.indexOf('+')
+        if(index === -1){
+            return
+        }else if(isNaN(this.equation[index - 1])){
+            return `cannot add to ${this.equation[index-1]}`
+        }else if(isNaN(this.equation[index + 1])){
+            return `cannot add ${this.equation[index+1]}`
+        }else{
+            let x = this.equation.splice(index-1, 3)
+            x = +x[0] + +x[2]
+            this.equation.splice(index-1, 0, x)
+        }
     }
     subtract(){
-        return this.prev - this.curr
+        let index = this.equation.indexOf('-')
+        if(index === -1){
+            return
+        }else if(isNaN(this.equation[index - 1])){
+            return `cannot subtract from ${this.equation[index-1]}`
+        }else if(isNaN(this.equation[index + 1])){
+            return `cannot subtract ${this.equation[index+1]}`
+        }else{
+            let x = this.equation.splice(index-1, 3)
+            x = +x[0] - +x[2]
+            this.equation.splice(index-1, 0, x)
+        }
     }
     mult(){
         let index = this.equation.indexOf('x')
