@@ -241,10 +241,28 @@ class Calculator {
         }
     }
     percent(){
-        return this.prev / 100
+        let index = this.equation.indexOf(root)
+        if(index === -1){
+            return
+        }else if(isNaN(this.equation[index - 1])){
+            return `cannot get a percentage of ${this.equation[index-1]}`
+        }else{
+            let x = this.equation.splice(index-1, 2)
+            x = x[0] / 100
+            this.equation.splice(index-1, 0, x)
+        }
     }
     expo(){
-        return this.prev ** this.curr
+        let index = this.equation.indexOf(root)
+        if(index === -1){
+            return
+        }else if(isNaN(this.equation[index - 1])){
+            return `exponents cannot be applied to ${this.equation[index-1]}`
+        }else{
+            let x = this.equation.splice(index-1, 3)
+            x = x[0] ** x[2]
+            this.equation.splice(index-1, 0, x)
+        }
     }
     root(){
         let index = this.equation.indexOf(root)
