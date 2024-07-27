@@ -234,33 +234,43 @@ class Calculator {
         return this.prev / this.curr
     }
     factorial(){
-        let num = 1
-        for (let i = this.prev ; i > 0 ; i--){
-            num *= i
-            return num
+        let index = this.equation.indexOf('!')
+        if(index === -1){
+            return
+        }else if(isNaN(this.equation[index - 1])){
+            return `cannot give factorial of ${this.equation[index-1]}`
+        }else{
+            let x = this.equation.splice(index-1,2)
+            x = +x[0]
+            let num = 1
+            while(x > 0){
+                num *= (x)
+                x--
+            }
+            this.equation.splice(index-1, 0, num)
         }
     }
     percent(){
-        let index = this.equation.indexOf(root)
+        let index = this.equation.indexOf('%')
         if(index === -1){
             return
         }else if(isNaN(this.equation[index - 1])){
             return `cannot get a percentage of ${this.equation[index-1]}`
         }else{
             let x = this.equation.splice(index-1, 2)
-            x = x[0] / 100
+            x = +x[0] / 100
             this.equation.splice(index-1, 0, x)
         }
     }
     expo(){
-        let index = this.equation.indexOf(root)
+        let index = this.equation.indexOf('^')
         if(index === -1){
             return
         }else if(isNaN(this.equation[index - 1])){
             return `exponents cannot be applied to ${this.equation[index-1]}`
         }else{
             let x = this.equation.splice(index-1, 3)
-            x = x[0] ** x[2]
+            x = Number(x[0]) ** +x[2]
             this.equation.splice(index-1, 0, x)
         }
     }
@@ -270,7 +280,7 @@ class Calculator {
             return
         }else if(!isNaN(this.equation[index - 1])){
             let x = this.equation.splice(index - 1, 3)
-            x = x[0] * Math.sqrt(x[2])
+            x = +x[0] * Math.sqrt(+x[2])
             this.equation.splice(index - 1, 0, x)
         }
     }
