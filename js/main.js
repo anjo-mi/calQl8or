@@ -257,7 +257,7 @@ class Calculator {
         }
     }
     backspace(){
-        // remove last item in array
+        this.equation.pop()
     }
     equals(){
 
