@@ -328,6 +328,21 @@ class Calculator {
             this.equation.splice(index - 1, 0, x)
         }
     }
+    parenthetical(){
+        let index = this.equation.indexOf('(')
+        if (index === -1){
+            return
+        }else{
+            let closeParInd = this.equation.indexOf(')', i + 1)
+            if (closeParInd === i + 1){
+                return
+            }else{
+                let x = this.equation.splice(index - 1, closeParInd - index + 1)
+                let y = x.equals()
+
+            }
+        }
+    }
     backspace(){
         this.equation.pop()
     }
