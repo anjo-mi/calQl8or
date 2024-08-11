@@ -232,7 +232,7 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 3)
             x = +x[0] + +x[2]
-            this.equation.splice(index-1, 0, x)
+            return this.equation.splice(index-1, 0, x)
         }
     }
     subtract(){
@@ -246,7 +246,7 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 3)
             x = +x[0] - +x[2]
-            this.equation.splice(index-1, 0, x)
+            return this.equation.splice(index-1, 0, x)
         }
     }
     mult(){
@@ -260,7 +260,7 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 3)
             x = +x[0] * +x[2]
-            this.equation.splice(index-1, 0, x)
+            return this.equation.splice(index-1, 0, x)
         }
     }
     divide(){
@@ -274,7 +274,7 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 3)
             x = +x[0] / +x[2]
-            this.equation.splice(index-1, 0, x)
+            return this.equation.splice(index-1, 0, x)
         }
     }
     factorial(){
@@ -291,7 +291,7 @@ class Calculator {
                 num *= (x)
                 x--
             }
-            this.equation.splice(index-1, 0, num)
+            return this.equation.splice(index-1, 0, num)
         }
     }
     percent(){
@@ -303,7 +303,7 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 2)
             x = +x[0] / 100
-            this.equation.splice(index-1, 0, x)
+            return this.equation.splice(index-1, 0, x)
         }
     }
     expo(){
@@ -315,7 +315,7 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 3)
             x = Number(x[0]) ** +x[2]
-            this.equation.splice(index-1, 0, x)
+            return this.equation.splice(index-1, 0, x)
         }
     }
     root(){
@@ -325,7 +325,7 @@ class Calculator {
         }else if(!isNaN(this.equation[index - 1])){
             let x = this.equation.splice(index - 1, 3)
             x = +x[0] * Math.sqrt(+x[2])
-            this.equation.splice(index - 1, 0, x)
+            return this.equation.splice(index - 1, 0, x)
         }
     }
     parenthetical(){
@@ -339,17 +339,19 @@ class Calculator {
             }else{
                 let x = this.equation.splice(index - 1, closeParInd - index + 1)
                 let y = x.equals()
-
+                return this.equation.splice(index - 1, 0, y)
             }
         }
     }
     backspace(){
         this.equation.pop()
+        return this.equation
     }
     equals(){
 
     }
     clear(){
-        // clear both equation array and answer display
+        this.equation = []
+        return this.equation
     }
 }
