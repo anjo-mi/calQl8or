@@ -221,6 +221,15 @@ class Calculator {
         this.equation = []
         this.display = ''
     }
+    pi(){
+        let index = this.equation.indexOf(pi)
+        if (index === -1){
+            return
+        }
+        if (isNaN(index - 1) && isNaN(index + 1)){
+            this.equation.splice(index, 1, Math.PI)
+        }
+    }
     add(){
         let index = this.equation.indexOf('+')
         if(index === -1){
@@ -232,7 +241,8 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 3)
             x = +x[0] + +x[2]
-            return this.equation.splice(index-1, 0, x)
+            this.equation.splice(index-1, 0, x)
+            return this.equation
         }
     }
     subtract(){
@@ -246,7 +256,8 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 3)
             x = +x[0] - +x[2]
-            return this.equation.splice(index-1, 0, x)
+            this.equation.splice(index-1, 0, x)
+            return this.equation
         }
     }
     mult(){
@@ -260,7 +271,8 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 3)
             x = +x[0] * +x[2]
-            return this.equation.splice(index-1, 0, x)
+            this.equation.splice(index-1, 0, x)
+            return this.equation
         }
     }
     divide(){
@@ -274,7 +286,8 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 3)
             x = +x[0] / +x[2]
-            return this.equation.splice(index-1, 0, x)
+            this.equation.splice(index-1, 0, x)
+            return this.equation
         }
     }
     factorial(){
@@ -291,7 +304,8 @@ class Calculator {
                 num *= (x)
                 x--
             }
-            return this.equation.splice(index-1, 0, num)
+            this.equation.splice(index-1, 0, num)
+            return this.equation
         }
     }
     percent(){
@@ -303,7 +317,8 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 2)
             x = +x[0] / 100
-            return this.equation.splice(index-1, 0, x)
+            this.equation.splice(index-1, 0, x)
+            return this.equation
         }
     }
     expo(){
@@ -315,7 +330,8 @@ class Calculator {
         }else{
             let x = this.equation.splice(index-1, 3)
             x = Number(x[0]) ** +x[2]
-            return this.equation.splice(index-1, 0, x)
+            this.equation.splice(index-1, 0, x)
+            return this.equation
         }
     }
     root(){
@@ -325,7 +341,8 @@ class Calculator {
         }else if(!isNaN(this.equation[index - 1])){
             let x = this.equation.splice(index - 1, 3)
             x = +x[0] * Math.sqrt(+x[2])
-            return this.equation.splice(index - 1, 0, x)
+            this.equation.splice(index - 1, 0, x)
+            return this.equation
         }
     }
     parenthetical(){
@@ -339,7 +356,8 @@ class Calculator {
             }else{
                 let x = this.equation.splice(index - 1, closeParInd - index + 1)
                 let y = x.equals()
-                return this.equation.splice(index - 1, 0, y)
+                this.equation.splice(index - 1, 0, y)
+                return this.equation
             }
         }
     }
