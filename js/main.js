@@ -373,3 +373,15 @@ class Calculator {
         return this.equation
     }
 }
+
+// const calculator = new Calculator();
+// ***********************************************************
+// very important dont lose************very important dont lose
+
+// document.querySelectorAll('.digit, .operator').forEach(button =>{
+//     button.addEventListener('click', () => calculator.appendToEquation(button.textContent));
+// });
+
+
+// document.getElementById('equals').addEventListener('click', () => calculator.calculate());
+// document.getElementById('clear').addEventListener('click', () => calculator.clear());
