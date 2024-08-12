@@ -219,7 +219,16 @@ class Calculator {
         this.prev
         this.curr
         this.equation = []
-        this.display = ''
+        this.display = document.querySelector('.equation')
+    }
+
+    display(){
+        this.display = this.equation.join('')
+    }
+
+    appendToEquation(value){
+        this.equation.push(value)
+        this.display()
     }
     pi(){
         let index = this.equation.indexOf(pi)
