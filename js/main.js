@@ -238,7 +238,7 @@ class Calculator {
     }
 
     disp(){
-        this.display = this.equation.join('')
+        this.display.textContent = this.equation.join('')
     }
 
     insertVal(value){
