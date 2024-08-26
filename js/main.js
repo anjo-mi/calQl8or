@@ -233,6 +233,7 @@ class Calculator {
         this.prev
         this.curr
         this.equation = []
+        this.answer = document.querySelector('.answer')
         this.display = document.querySelector('.equation')
     }
 
@@ -251,6 +252,7 @@ class Calculator {
         }
         if (isNaN(index - 1) && isNaN(index + 1)){
             this.equation.splice(index, 1, Math.PI)
+            this.disp()
         }
     }
     add(){
@@ -265,7 +267,8 @@ class Calculator {
             let x = this.equation.splice(index-1, 3)
             x = +x[0] + +x[2]
             this.equation.splice(index-1, 0, x)
-            return this.equation
+            // return this.equation
+            this.disp()
         }
     }
     subtract(){
@@ -280,7 +283,8 @@ class Calculator {
             let x = this.equation.splice(index-1, 3)
             x = +x[0] - +x[2]
             this.equation.splice(index-1, 0, x)
-            return this.equation
+            // return this.equation
+            this.disp()
         }
     }
     mult(){
@@ -295,7 +299,8 @@ class Calculator {
             let x = this.equation.splice(index-1, 3)
             x = +x[0] * +x[2]
             this.equation.splice(index-1, 0, x)
-            return this.equation
+            // return this.equation
+            this.disp()
         }
     }
     divide(){
@@ -310,7 +315,8 @@ class Calculator {
             let x = this.equation.splice(index-1, 3)
             x = +x[0] / +x[2]
             this.equation.splice(index-1, 0, x)
-            return this.equation
+            // return this.equation
+            this.disp()
         }
     }
     factorial(){
@@ -328,7 +334,8 @@ class Calculator {
                 x--
             }
             this.equation.splice(index-1, 0, num)
-            return this.equation
+            // return this.equation
+            this.disp()
         }
     }
     percent(){
@@ -341,7 +348,8 @@ class Calculator {
             let x = this.equation.splice(index-1, 2)
             x = +x[0] / 100
             this.equation.splice(index-1, 0, x)
-            return this.equation
+            // return this.equation
+            this.disp()
         }
     }
     expo(){
@@ -354,7 +362,8 @@ class Calculator {
             let x = this.equation.splice(index-1, 3)
             x = Number(x[0]) ** +x[2]
             this.equation.splice(index-1, 0, x)
-            return this.equation
+            // return this.equation
+            this.disp()
         }
     }
     root(){
@@ -365,7 +374,8 @@ class Calculator {
             let x = this.equation.splice(index - 1, 3)
             x = +x[0] * Math.sqrt(+x[2])
             this.equation.splice(index - 1, 0, x)
-            return this.equation
+            // return this.equation
+            this.disp()
         }
     }
     parenthetical(){
@@ -380,15 +390,34 @@ class Calculator {
                 let x = this.equation.splice(index - 1, closeParInd - index + 1)
                 let y = x.equals()
                 this.equation.splice(index - 1, 0, y)
-                return this.equation
+                // return this.equation
+                this.disp()
             }
         }
     }
     backspace(){
         this.equation.pop()
-        return this.equation
+        // return this.equation
+        this.disp()
     }
     equals(){
+        let str = ''
+        let arr = []
+        for ( let i = 0 ; i < this.equation.length ; i++ ){
+            if (!isNaN(this.equation[i])){
+                str += this.equation[i]
+            }else{
+                arr.push(str)
+                arr.push(this.equation[i])
+                str = ''
+            }
+            if ( i === this.equation.length -1 ){
+                arr.push(str)
+                str = ''
+            }
+        }
+        this.equation = arr
+        arr = []
         while (this.equation.includes(pi)){
             this.pi()
         }
@@ -420,12 +449,14 @@ class Calculator {
             this.add()
         }
 
-        return this.equation
+        // return this.equation
+        this.answer.textContent = this.equation.toString()
 
     }
     clear(){
         this.equation = []
-        return this.equation
+        // return this.equation
+        this.disp()
     }
 }
 
@@ -438,6 +469,9 @@ digits.forEach(button => {
         calc.insertVal(button.textContent)
     })
 })
+
+document.querySelector('.equals').addEventListener('click', () => calc.equals())
+document.querySelector('.clear').addEventListener('click', () => calc.clear())
 
 // const calculator = new Calculator();
 // ***********************************************************
