@@ -236,13 +236,13 @@ class Calculator {
         this.display = document.querySelector('.equation')
     }
 
-    display(){
+    disp(){
         this.display = this.equation.join('')
     }
 
     insertVal(value){
         this.equation.push(value)
-        this.display()
+        this.disp()
     }
     pi(){
         let index = this.equation.indexOf(pi)
