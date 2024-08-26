@@ -375,6 +375,38 @@ class Calculator {
         return this.equation
     }
     equals(){
+        while (this.equation.includes(pi)){
+            this.pi()
+        }
+        while (this.equation.includes('(') && this.equation.includes(')')){
+            this.parenthetical()
+        }
+        while (this.equation.includes('%')){
+            this.percent()
+        }
+        while (this.equation.includes('!')){
+            this.factorial()
+        }
+        while (this.equation.includes(root)){
+            this.root()
+        }
+        while (this.equation.includes('^')){
+            this.expo()
+        }
+        while (this.equation.includes(divide)){
+            this.divide()
+        }
+        while (this.equation.includes('x')){
+            this.mult()
+        }
+        while (this.equation.includes('-')){
+            this.subtract()
+        }
+        while (this.equation.includes('+')){
+            this.add()
+        }
+
+        return this.equation
 
     }
     clear(){
