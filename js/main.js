@@ -250,7 +250,11 @@ class Calculator {
         if (index === -1){
             return
         }
-        if (isNaN(index - 1) && isNaN(index + 1)){
+        if(index === this.equation.length - 1){
+            this.equation.splice(index, 1, 'x', Math.PI)
+            console.log(this.equation)
+            this.disp()
+        }else if (isNaN(index - 1) && isNaN(index + 1)){
             this.equation.splice(index, 1, Math.PI)
             this.disp()
         }
@@ -467,6 +471,7 @@ let digits = document.querySelectorAll('.digit')
 digits.forEach(button => {
     button.addEventListener('click', () => {
         calc.insertVal(button.textContent)
+        console.log(calc.equation)
     })
 })
 
