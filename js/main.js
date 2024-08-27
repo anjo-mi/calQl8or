@@ -390,15 +390,16 @@ class Calculator {
         }else{
             let closeParInd = this.equation.indexOf(')', index + 1)
             if (closeParInd === index + 1){
-                return // splice out the two
+                this.equation.splice(index, 2)
             }else{
-                let x = this.equation.splice(index + 1, closeParInd - (index + 1)) //  [ (, 2, x, 3, ) ]
+                let x = this.equation.splice(index, closeParInd - index + 1) //  [ (, 2, x, 3, ) ]
                 console.log(x)
-                let y = new Calculator(x)
+                let y = new Calculator(x).equals(false)
 
                 // need to pass this equations value as argument into equals so i can pass any array into it
                 console.log(y)
-                console.log(this.equation.splice(index - 1, 0, y))
+                this.equation.splice(index, 0, y)
+                console.log(this.equation)
                 this.disp()
             }
         }
@@ -408,12 +409,14 @@ class Calculator {
         // return this.equation
         this.disp()
     }
-    equals(){
+    equals(parenthetical = true){
         while (this.equation.includes(pi)){
             this.pi()
         }
-        while (this.equation.includes('(') && this.equation.includes(')')){
-            this.parenthetical()
+        if (parenthetical){
+            while (this.equation.includes('(') && this.equation.includes(')')){
+                this.parenthetical()
+            }
         }
         while (this.equation.includes('%')){
             this.percent()
@@ -469,7 +472,8 @@ class Calculator {
     }
 }
 
-const calc = new Calculator()
+const calc = new Calculator(['(', '2', 'x', '3', ')'])
+calc.equals()
 
 let digits = document.querySelectorAll('.digit')
 
@@ -482,6 +486,8 @@ digits.forEach(button => {
 
 document.querySelector('.equals').addEventListener('click', () => calc.equals())
 document.querySelector('.clear').addEventListener('click', () => calc.clear())
+
+
 
 // const calculator = new Calculator();
 // ***********************************************************
