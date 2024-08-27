@@ -229,10 +229,10 @@ let divide = '\u00f7'
 
 
 class Calculator {
-    constructor(){
+    constructor(equation){
+        this.equation = equation || []
         this.prev
         this.curr
-        this.equation = []
         this.answer = document.querySelector('.answer')
         this.display = document.querySelector('.equation')
     }
@@ -390,13 +390,15 @@ class Calculator {
         }else{
             let closeParInd = this.equation.indexOf(')', index + 1)
             if (closeParInd === index + 1){
-                return
+                return // splice out the two
             }else{
-                let x = this.equation.splice(index, closeParInd - index + 1)
-                let y = calc.equals()
+                let x = this.equation.splice(index + 1, closeParInd - (index + 1)) //  [ (, 2, x, 3, ) ]
+                console.log(x)
+                let y = new Calculator(x)
+
+                // need to pass this equations value as argument into equals so i can pass any array into it
                 console.log(y)
-                this.equation.splice(index - 1, 0, y)
-                // return this.equation
+                console.log(this.equation.splice(index - 1, 0, y))
                 this.disp()
             }
         }
@@ -457,6 +459,7 @@ class Calculator {
         
         // return this.equation
         this.answer.textContent = this.equation.toString()
+        return this.equation
         
     }
     clear(){
