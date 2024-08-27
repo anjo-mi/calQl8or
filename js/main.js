@@ -405,23 +405,6 @@ class Calculator {
         this.disp()
     }
     equals(){
-        let str = ''
-        let arr = []
-        for ( let i = 0 ; i < this.equation.length ; i++ ){
-            if (!isNaN(this.equation[i])){
-                str += this.equation[i]
-            }else{
-                arr.push(str)
-                arr.push(this.equation[i])
-                str = ''
-            }
-            if ( i === this.equation.length -1 ){
-                arr.push(str)
-                str = ''
-            }
-        }
-        this.equation = arr
-        arr = []
         while (this.equation.includes(pi)){
             this.pi()
         }
@@ -452,10 +435,27 @@ class Calculator {
         while (this.equation.includes('+')){
             this.add()
         }
-
+        let str = ''
+        let arr = []
+        for ( let i = 0 ; i < this.equation.length ; i++ ){
+            if (!isNaN(this.equation[i])){
+                str += this.equation[i]
+            }else{
+                arr.push(str)
+                arr.push(this.equation[i])
+                str = ''
+            }
+            if ( i === this.equation.length -1 ){
+                arr.push(str)
+                str = ''
+            }
+        }
+        this.equation = arr
+        arr = []
+        
         // return this.equation
         this.answer.textContent = this.equation.toString()
-
+        
     }
     clear(){
         this.equation = []
