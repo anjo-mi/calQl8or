@@ -250,6 +250,7 @@ class Calculator {
         if (index === -1){
             return
         }
+        this.parenthetical()
         if(index === this.equation.length - 1){
             this.equation.splice(index, 1, 'x', Math.PI)
             console.log(this.equation)
@@ -387,12 +388,13 @@ class Calculator {
         if (index === -1){
             return
         }else{
-            let closeParInd = this.equation.indexOf(')', i + 1)
-            if (closeParInd === i + 1){
+            let closeParInd = this.equation.indexOf(')', index + 1)
+            if (closeParInd === index + 1){
                 return
             }else{
-                let x = this.equation.splice(index - 1, closeParInd - index + 1)
-                let y = x.equals()
+                let x = this.equation.splice(index, closeParInd - index + 1)
+                let y = calc.equals()
+                console.log(y)
                 this.equation.splice(index - 1, 0, y)
                 // return this.equation
                 this.disp()
