@@ -385,14 +385,17 @@ class Calculator {
     }
     parenthetical(){
         let index = this.equation.indexOf('(')
+        console.log(index)
         if (index === -1){
             return
         }else{
             let closeParInd = this.equation.indexOf(')', index + 1)
+            console.log(closeParInd)
             if (closeParInd === index + 1){
                 this.equation.splice(index, 2)
             }else{
                 let x = this.equation.splice(index, closeParInd - index + 1) //  [ (, 2, x, 3, ) ]
+                x = x.splice(1, x.length -2)
                 console.log(x)
                 let y = new Calculator(x).equals(false)
 
@@ -472,8 +475,9 @@ class Calculator {
     }
 }
 
-const calc = new Calculator(['(', '2', 'x', '3', ')'])
-calc.equals()
+const calc = new Calculator()
+// calc.equals()
+// let parenth = ['(', '2', 'x', '3', ')']
 
 let digits = document.querySelectorAll('.digit')
 
