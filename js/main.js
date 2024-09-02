@@ -395,9 +395,13 @@ class Calculator {
                 this.equation.splice(index, 2)
             }else{
                 let x = this.equation.splice(index, closeParInd - index + 1) //  [ (, 2, x, 3, ) ]
-                x = x.splice(1, x.length -2)
                 console.log(x)
-                let y = new Calculator(x).equals(false)
+                x = x.splice(1, x.length - 1)
+                console.log(x)
+                let y = new Calculator(x)
+                if (y.equation.includes('(') && y.equation.includes(')')){
+                    y = y.equals().equation
+                }
 
                 // need to pass this equations value as argument into equals so i can pass any array into it
                 console.log(y)
@@ -484,7 +488,7 @@ let digits = document.querySelectorAll('.digit')
 digits.forEach(button => {
     button.addEventListener('click', () => {
         calc.insertVal(button.textContent)
-        console.log(calc.equation)
+        //console.log(calc.equation)
     })
 })
 
