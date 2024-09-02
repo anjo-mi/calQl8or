@@ -394,18 +394,19 @@ class Calculator {
             if (closeParInd === index + 1){
                 this.equation.splice(index, 2)
             }else{
-                let x = this.equation.splice(index, closeParInd - index + 1) //  [ (, 2, x, 3, ) ]
+                let x = this.equation.splice(index + 1, closeParInd - index) //  [ (, 2, x, 3, ) ]
                 console.log(x)
-                x = x.splice(1, x.length - 1)
+                x = x.slice(1, x.length - 1)
                 console.log(x)
                 let y = new Calculator(x)
+                console.log(y.equation)
                 if (y.equation.includes('(') && y.equation.includes(')')){
-                    y = y.equals().equation
+                    y = y.equation.equals()
                 }
 
                 // need to pass this equations value as argument into equals so i can pass any array into it
                 console.log(y)
-                this.equation.splice(index, 0, y)
+                this.equation.splice(index+1, 0, y.equation)
                 console.log(this.equation)
                 this.disp()
             }
