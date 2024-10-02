@@ -388,20 +388,28 @@ class Calculator {
         if (index === -1){
             return
         }else{
-            let closeParInd = this.equation.indexOf(')', index + 1)
+            let closeParInd = this.equation.indexOf(')', index)
             if (closeParInd === index + 1){
                 this.equation.splice(index, 2)
             }else{
-                let x = this.equation.splice(index + 1, closeParInd - index)
+                let x = this.equation.splice(index, (closeParInd - index) + 1)
+                console.log(x, 'contents of equation spliced')
                 x = x.slice(1, x.length - 1)
+                console.log(x, 'without parentheses')
                 let y = new Calculator(x)
+                console.log(y, 'new calc obj')
                 if (y.equation.includes('(') && y.equation.includes(')')){
                     y = y.equation.equals()
+                    console.log(y, 'inner contents equated')
                 }
 
                 this.disp()
+
             }
         }
+
+        let open = this.equation.lastIndexOf('(')
+        let close = this.equation.indexOf(')', open)
 
         // function removeParentheses(s){
         //     let outer = ''
