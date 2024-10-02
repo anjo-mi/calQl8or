@@ -385,32 +385,41 @@ class Calculator {
     }
     parenthetical(){
         let index = this.equation.indexOf('(')
-        console.log(index)
         if (index === -1){
             return
         }else{
             let closeParInd = this.equation.indexOf(')', index + 1)
-            console.log(closeParInd)
             if (closeParInd === index + 1){
                 this.equation.splice(index, 2)
             }else{
-                let x = this.equation.splice(index + 1, closeParInd - index) //  [ (, 2, x, 3, ) ]
-                console.log(x)
+                let x = this.equation.splice(index + 1, closeParInd - index)
                 x = x.slice(1, x.length - 1)
-                console.log(x)
                 let y = new Calculator(x)
-                console.log(y.equation)
                 if (y.equation.includes('(') && y.equation.includes(')')){
                     y = y.equation.equals()
                 }
 
-                // need to pass this equations value as argument into equals so i can pass any array into it
-                console.log(y)
-                this.equation.splice(index+1, 0, y.equation)
-                console.log(this.equation)
                 this.disp()
             }
         }
+
+        // function removeParentheses(s){
+        //     let outer = ''
+        //     let depth = 0
+            
+        //     for (let char of s){
+        //       if (char === '('){
+        //         depth++
+        //       }else if (char === ')'){
+        //         depth--
+        //       }else if (depth === 0){
+        //         outer += char
+        //       }
+        //     }
+        //     return outer
+        //   }
+
+
     }
     backspace(){
         this.equation.pop()
