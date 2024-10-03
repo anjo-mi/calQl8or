@@ -392,15 +392,22 @@ class Calculator {
             if (closeParInd === index + 1){
                 this.equation.splice(index, 2)
             }else{
-                let x = this.equation.splice(index, (closeParInd - index) + 1)
+                let x = this.equation.splice(index, (closeParInd - index) + 2)
                 console.log(x, 'contents of equation spliced')
                 x = x.slice(1, x.length - 1)
                 console.log(x, 'without parentheses')
+                
+                
                 let y = new Calculator(x)
                 console.log(y, 'new calc obj')
+
+                y.equals()
+                console.log(y.equation)
+
+
                 if (y.equation.includes('(') && y.equation.includes(')')){
-                    y = y.equation.equals()
-                    console.log(y, 'inner contents equated')
+                    let z = y.equation.equals()
+                    console.log(z, 'inner contents equated')
                 }
 
                 this.disp()
