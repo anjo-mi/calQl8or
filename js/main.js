@@ -108,7 +108,7 @@ class Calculator {
             while (startIndex >= 0 && (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.' )){
                 startIndex--;
             }
-            while (endIndex <= str.length && (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.' )){
+            while (endIndex < str.length && (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.' )){
                 endIndex++;
             }
             const expression = str.substring(startIndex+1, endIndex);
@@ -126,7 +126,7 @@ class Calculator {
             while (startIndex >= 0 && (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.' )){
                 startIndex--;
             }
-            while (endIndex <= str.length && (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.' )){
+            while (endIndex < str.length && (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.' )){
                 endIndex++;
             }
             const expression = str.substring(startIndex+1, endIndex);
@@ -140,7 +140,7 @@ class Calculator {
             while (startIndex >= 0 && (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.' )){
                 startIndex--;
             }
-            while (endIndex <= str.length && (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.' )){
+            while (endIndex < str.length && (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.' )){
                 endIndex++;
             }
             const expression = str.substring(startIndex+1, endIndex);
@@ -148,6 +148,46 @@ class Calculator {
             str = str.replace(expression, result);
         }
 
+        return str;
+    }
+
+    handleAddAndSub(str){
+        while (str.includes('+')){
+            const plusIndex = str.indexOf('+');
+            let startIndex = plusIndex;
+            let endIndex = plusIndex + 1;
+            while (startIndex >= 0 && 
+                  (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.')
+            ){
+                startIndex--;
+            }
+            while (endIndex < str.length && 
+                  (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.')
+            ){
+                endIndex++;
+            }
+            const expression = str.substring(startIndex + 1, endIndex);
+            const result = this.evaluatePart(expression);
+            str = str.replace(expression, result);
+        }
+        while (str.includes('-')){
+            const minusIndex = str.indexOf('-');
+            let startIndex = minusIndex;
+            let endIndex = minusIndex + 1;
+            while (startIndex >= 0 && 
+                  (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.')
+            ){
+                startIndex--;
+            }
+            while (endIndex < str.length && 
+                  (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.')
+            ){
+                endIndex++;
+            }
+            const expression = str.substring(startIndex + 1, endIndex);
+            const result = this.evaluatePart(expression);
+            str = str.replace(expression, result);
+        }
         return str;
     }
 
