@@ -8,18 +8,16 @@ const DIVIDE = '\u00f7'
 class Calculator {
     constructor(equation){
         this.equation = equation || ''
-        this.prev
-        this.curr
         this.answer = document.querySelector('.answer')
         this.display = document.querySelector('.equation')
-        this.ops = [ROOT, DIVIDE, 'x', '+', '-', '^', '!']
+        this.ops = [ROOT, DIVIDE, 'x', '+', '-', '^', '!', '%']
         this.operations = {
             '+' : (a,b) => a + b,
             '-' : (a,b) => a - b,
-            DIVIDE : (a,b) => a / b,
+            [DIVIDE] : (a,b) => a / b,
             'x' : (a,b) => a * b,
             '^' : (a,b) => a ** b,
-            ROOT : (a) => Math.sqrt(a),
+            [ROOT] : (a) => Math.sqrt(a),
             '!' : (a) => {
                 if (a < 0) throw new Error('cannot calculate imaginary numbers; negative factorial');
                 const integers = [];
@@ -27,7 +25,8 @@ class Calculator {
                     integers.push(i);
                 }
                 return integers.reduce((a,el) => a * el, 1);
-            }
+            },
+            '%' : (a) => a /100
         }
     }
 
@@ -41,11 +40,11 @@ class Calculator {
     }
 
     pi(){
-        return Math.PI;
+        return this.insertVal((Math.PI).toString());
     }
 
-    calculateResult(){
-        let result = this.equation;
+    calculateResult(str = this.equation){
+        let result = str;
 
         result = this.handleParentheses(result);
         result = this.handleRootsAndFactorials(result);
@@ -73,37 +72,54 @@ class Calculator {
     }
 
     handleRootsAndFactorials(str){
-        while (str.includes(ROOT)){
+        if (str.includes(ROOT)){
             const rootIndex = str.indexOf(ROOT);
             let endIndex = rootIndex + 1;
             while (endIndex < str.length && ( !isNaN(parseInt(str[endIndex])) || str[endIndex] === '.')){
                 endIndex++;
             }
             const num = str.substring(rootIndex + 1 , endIndex);
-            const expression = ROOT + num;
-            const result = this.evaluatePart(expression);
-            str = str.replace(expression, result)
+            const result = this.operations[ROOT](Number(num));
+            const newStr = str.substring(0,rootIndex) + result + str.substring(endIndex);
+
+            return this.handleRootsAndFactorials(newStr)
         }
 
-        while (str.includes('!')){
+        if (str.includes('!')){
             const factorialIndex = str.indexOf('!');
-            let startIndex = factorialIndex;
+            let startIndex = factorialIndex - 1;
             while (startIndex >= 0 && ( !isNaN(parseInt(str[startIndex])) || str[startIndex] === '.') ){
                 startIndex--;
             }
             const num = str.substring(startIndex + 1, factorialIndex);
-            const expression = num + '!';
-            const result = this.evaluatePart(expression);
-            str = str.replace(expression, result)
+            const result = this.operations['!'](Number(num));
+            const newStr = str.substring(0, startIndex+1) + result + str.subString(factorialIndex + 1);
+
+            return this.handleRootsAndFactorials(newStr);
+        }
+
+        if (str.includes('%')){
+            const percentIndex = str.indexOf('%');
+            let startIndex = percentIndex - 1;
+            while (startIndex >= 0 && 
+                (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.')
+            ){
+                startIndex--;
+            }
+            const num = str.substring(startIndex + 1, percentIndex);
+            const result = this.operations['%'](Number(num));
+            const newStr = str.substring(0, startIndex+1) + result + str.substring(percentIndex + 1);
+
+            return this.handleRootsAndFactorials(newStr);
         }
 
         return str;
     }
 
     handleExponents(str){
-        while (str.includes('^')){
+        if (str.includes('^')){
             const expIndex = str.indexOf('^');
-            let startIndex = expIndex;
+            let startIndex = expIndex - 1;
             let endIndex = expIndex + 1;
             while (startIndex >= 0 && (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.' )){
                 startIndex--;
@@ -111,50 +127,65 @@ class Calculator {
             while (endIndex < str.length && (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.' )){
                 endIndex++;
             }
-            const expression = str.substring(startIndex+1, endIndex);
-            const result = this.evaluatePart(expression);
-            str = str.replace(expression, result);
+            const first = str.substring(startIndex + 1, expIndex);
+            const second = str.substring(expIndex + 1, endIndex);
+
+            const result = this.operations['^'](Number(first),Number(second));
+
+            const newStr = str.substring(0,startIndex + 1) + result + str.substring(endIndex);
+
+            return this.handleExponents(newStr)
         }
         return str;
     }
 
     handleMultAndDiv(str){
-        while (str.includes('x')){
-            const expIndex = str.indexOf('x');
-            let startIndex = expIndex;
-            let endIndex = expIndex + 1;
+        if (str.includes('x')){
+            const multIndex = str.indexOf('x');
+            let startIndex = multIndex - 1;
+            let endIndex = multIndex + 1;
             while (startIndex >= 0 && (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.' )){
                 startIndex--;
             }
             while (endIndex < str.length && (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.' )){
                 endIndex++;
             }
-            const expression = str.substring(startIndex+1, endIndex);
-            const result = this.evaluatePart(expression);
-            str = str.replace(expression, result);
+            const first = str.substring(startIndex + 1, multIndex);
+            const second = str.substring(multIndex + 1, endIndex);
+
+            const result = this.operations['x'](Number(first),Number(second));
+
+            const newStr = str.substring(0,startIndex + 1) + result + str.substring(endIndex);
+
+            return this.handleMultAndDiv(newStr);
         }
-        while (str.includes(DIVIDE)){
-            const expIndex = str.indexOf(DIVIDE);
-            let startIndex = expIndex;
-            let endIndex = expIndex + 1;
+        if (str.includes(DIVIDE)){
+            const divIndex = str.indexOf(DIVIDE);
+            let startIndex = divIndex - 1;
+            let endIndex = divIndex + 1;
             while (startIndex >= 0 && (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.' )){
                 startIndex--;
             }
             while (endIndex < str.length && (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.' )){
                 endIndex++;
             }
-            const expression = str.substring(startIndex+1, endIndex);
-            const result = this.evaluatePart(expression);
-            str = str.replace(expression, result);
+            const first = str.substring(startIndex + 1, divIndex);
+            const second = str.substring(divIndex + 1, endIndex);
+
+            const result = this.operations[DIVIDE](Number(first),Number(second));
+
+            const newStr = str.substring(0, startIndex + 1) + result + str.substring(endIndex);
+
+            return this.handleMultAndDiv(newStr);
         }
 
         return str;
     }
 
     handleAddAndSub(str){
-        while (str.includes('+')){
+        if (str.includes('+')){
             const plusIndex = str.indexOf('+');
-            let startIndex = plusIndex;
+            let startIndex = plusIndex - 1;
             let endIndex = plusIndex + 1;
             while (startIndex >= 0 && 
                   (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.')
@@ -166,13 +197,18 @@ class Calculator {
             ){
                 endIndex++;
             }
-            const expression = str.substring(startIndex + 1, endIndex);
-            const result = this.evaluatePart(expression);
-            str = str.replace(expression, result);
+            const first = str.substring(startIndex + 1, plusIndex);
+            const second = str.substring(plusIndex + 1, endIndex);
+
+            const result = this.operations['+'](Number(first), Number(second));
+
+            const newStr = str.substring(0, startIndex + 1) + result + str.substring(endIndex);
+
+            return this.handleAddAndSub(newStr);
         }
-        while (str.includes('-')){
+        if (str.includes('-')){
             const minusIndex = str.indexOf('-');
-            let startIndex = minusIndex;
+            let startIndex = minusIndex - 1;
             let endIndex = minusIndex + 1;
             while (startIndex >= 0 && 
                   (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.')
@@ -184,20 +220,40 @@ class Calculator {
             ){
                 endIndex++;
             }
-            const expression = str.substring(startIndex + 1, endIndex);
-            const result = this.evaluatePart(expression);
-            str = str.replace(expression, result);
+            const first = str.substring(startIndex + 1, minusIndex);
+            const second = str.substring(minusIndex + 1, endIndex);
+
+            const result = this.operations['-'](Number(first), Number(second));
+
+            const newStr = str.substring(0, startIndex + 1) + result + str.substring(endIndex);
+
+            return this.handleAddAndSub(newStr);
         }
         return str;
     }
 
     evaluatePart(string){
         if (!this.ops.some(el => string.includes(el))) return string;
-        const op = string.split('').find(el = this.ops.includes(el));
+        const op = string.split('').find(el => this.ops.includes(el));
         const [first,second] = string.split(op);
         return second 
                 ? this.operations[op](Number(first),Number(second))
                 : this.operations[op](Number(first));
+    }
+
+    backspace(){
+        this.equation = this.equation.slice(0,this.equation.length - 1);
+        this.disp();
+    }
+
+    clear(){
+        this.equation = '';
+        this.answer.textContent = '';
+        this.disp();
+    }
+
+    equals(){
+        this.answer.innerText = this.calculateResult();
     }
     
 }
@@ -208,7 +264,22 @@ let digits = document.querySelectorAll('.digit')
 
 digits.forEach(button => {
     button.addEventListener('click', () => {
-        calc.insertVal(button.textContent)
+        calc.insertVal(button.textContent);
     })
 })
 
+document.querySelector('.equals').addEventListener('click', () => {
+    calc.equals();
+})
+
+document.querySelector('.pi').addEventListener('click', () => {
+    calc.pi();
+})
+
+document.querySelector('.backspace').addEventListener('click', () => {
+    calc.backspace();
+})
+
+document.querySelector('.clear').addEventListener('click', () => {
+    calc.clear();
+})
