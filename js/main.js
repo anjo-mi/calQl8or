@@ -100,6 +100,24 @@ class Calculator {
         return str;
     }
 
+    handleExponents(str){
+        while (str.includes('^')){
+            const expIndex = str.indexOf('^');
+            let startIndex = expIndex;
+            let endIndex = expIndex + 1;
+            while (startIndex >= 0 && (!isNaN(parseInt(str[startIndex])) || str[startIndex] === '.' )){
+                startIndex--;
+            }
+            while (endIndex <= str.length && (!isNaN(parseInt(str[endIndex])) || str[endIndex] === '.' )){
+                endIndex++;
+            }
+            const expression = str.substring(startIndex+1, endIndex);
+            const result = this.evaluatePart(expression);
+            str = str.replace(expression, result);
+        }
+        return str;
+    }
+
     evaluatePart(string){
         if (!this.ops.some(el => string.includes(el))) return string;
         const op = string.split('').find(el = this.ops.includes(el));
