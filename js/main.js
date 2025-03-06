@@ -32,11 +32,27 @@ class Calculator {
 
     disp(){
         this.display.textContent = this.equation;
+        this.resizeInputs();
     }
 
     insertVal(value){
         this.equation += value;
         this.disp();
+    }
+
+    resizeInputs(){
+
+        const resizeElement = (element) => {
+            let fontSize = 4;
+            element.style.fontSize = `${fontSize}rem`;
+            while (element.scrollWidth > element.clientWidth && fontSize > .5){
+                fontSize -= 0.5;
+                element.style.fontSize = `${fontSize}rem`;
+            }
+        };
+        resizeElement(this.display);
+        resizeElement(this.answer);
+
     }
 
     pi(){
@@ -254,6 +270,7 @@ class Calculator {
 
     equals(){
         this.answer.innerText = this.calculateResult();
+        this.resizeInputs();
     }
     
 }

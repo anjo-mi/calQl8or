@@ -46,14 +46,20 @@ h1{
      grid-column-end: 6;
      grid-row-start: 1;
      grid-row-end: 2;
-     font-size: 6rem;
+     font-size: 4rem;
      }
 .answer{
      grid-column-start: 1;
      grid-column-end: 6;
      grid-row-start: 2;
      grid-row-end: 3;
-     font-size: 6rem;
+     font-size: 4rem;
+}
+
+.equation, .answer{
+     overflow: hidden;
+     white-space: nowrap;
+     max-width: 100%;
 }
 
 button{
